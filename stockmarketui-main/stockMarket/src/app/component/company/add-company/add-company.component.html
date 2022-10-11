@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <h1 class="text-center mt-3 mb-3">Register Company</h1>
+    <form [formGroup]="newCompanyForm" (submit)="registerCompany(newCompanyForm.value)">
+        <div class="row">
+            <div class="col-4 pt-2">
+                <label for="name" class="col-12">Company Name</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <input matInput formControlName="name">
+                </mat-form-field>
+            </div>
+            <div class="col-4 pt-2">
+                <label for="companyCode" class="col-12">Company Code</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <input matInput formControlName="companyCode">
+                </mat-form-field>
+            </div>
+            <div class="col-4 pt-2">
+                <label for="ceo" class="col-12">Company Ceo</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <input matInput formControlName="ceo">
+                </mat-form-field>
+            </div>
+            <div class="col-4 pt-2">
+                <label for="turnover" class="col-12">Company Turnover</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <input matInput formControlName="turnover">
+                </mat-form-field>
+            </div>
+            <div class="col-4 pt-2">
+                <label for="website" class="col-12">Company Website</label>
+                <mat-form-field appearance="outline" class="full-width">
+                    <input matInput formControlName="website">
+                </mat-form-field>
+            </div>
+            <div class="col-3 pt-2">
+                <label for="stockExchange" class="col-12">Stock Exchange</label>
+
+                <mat-radio-group formControlName="stockExchange">
+                    <mat-radio-button value="bse">BSE</mat-radio-button>&nbsp;
+                    <mat-radio-button value="nse">NSE</mat-radio-button>
+                </mat-radio-group>
+            </div>            
+            <div class="col-3 pt-2 search-button">
+                <button mat-raised-button color="primary">Register</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,7 @@
+{
+    "/api/*" :{
+        "target": "http://ec2-35-167-170-15.us-west-2.compute.amazonaws.com:6039",
+        "secure": false,
+        "logLevel": "debug"
+    }
+}

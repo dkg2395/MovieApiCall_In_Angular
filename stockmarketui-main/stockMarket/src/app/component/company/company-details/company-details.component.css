@@ -1,0 +1,14 @@
+table, .full-width{
+   width: 100%;
+}
+.search-button{
+    display: flex;
+    align-items: center;
+}
+.table>:not(:first-child) {
+    border-top: 0px solid currentColor;
+}
+
+.marginright{
+    margin-right: 3px;
+}

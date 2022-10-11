@@ -1,0 +1,15 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar {
+    background-color: #2f477c;
+    color: white;
+}
+
+.registerCompany.active,
+.companylist.active,
+.stocklist.active,
+.addstock.active {
+    color: #deb887;
+}

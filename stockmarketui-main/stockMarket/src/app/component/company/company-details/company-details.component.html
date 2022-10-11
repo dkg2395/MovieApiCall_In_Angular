@@ -1,0 +1,128 @@
+<div class="container-fluid">
+    <h1 class="text-center mt-3 mb-3">Company Details</h1>
+
+    <div class="row">
+        <div class="col-12">
+            <table mat-table [dataSource]="companyList" class="mat-elevation-z8">
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                    <td mat-cell *matCellDef="let element"> {{element.companyCode}} </td>
+                </ng-container>
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ceo">
+                    <th mat-header-cell *matHeaderCellDef> Ceo</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ceo}} </td>
+                </ng-container>
+                <ng-container matColumnDef="turnover">
+                    <th mat-header-cell *matHeaderCellDef> Turnover</th>
+                    <td mat-cell *matCellDef="let element"> {{element.turnover}} </td>
+                </ng-container>
+                <ng-container matColumnDef="website">
+                    <th mat-header-cell *matHeaderCellDef> Website</th>
+                    <td mat-cell *matCellDef="let element"> {{element.website}} </td>
+                </ng-container>
+                <ng-container matColumnDef="stockExchange">
+                    <th mat-header-cell *matHeaderCellDef> Stock Exchange</th>
+                    <td mat-cell *matCellDef="let element"> {{element.bse === true ? 'BSE' : 'NSE'}} </td>
+                </ng-container>
+                <ng-container matColumnDef="stockPrice">
+                    <th mat-header-cell *matHeaderCellDef> Latest Price</th>
+                    <td mat-cell *matCellDef="let element">{{ element.latestStock }} </td>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action</th>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-raised-button class="marginright" color="primary"
+                            (click)="viewCompanyDetails(element.companyCode,viewdetails)">
+                            <mat-icon>visibility</mat-icon>
+                        </button>
+                        <button mat-raised-button color="warn"
+                            (click)="deleteCompany(element.companyCode,deleteCompanyModal)">
+                            <mat-icon>delete_outline</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <table *ngIf="companyList.length === 0">
+                <tr>
+                    <td [attr.colspan]="displayedColumns.length">No records found</td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+
+            <ng-template #viewdetails>
+                <h2 mat-dialog-title>{{companyDetails.name}} Details</h2>
+                <mat-divider></mat-divider>
+                <mat-dialog-content class="mat-typography mt-4">
+                    <div class="row">
+                        <div class="col-sm-4 form-group">
+                            <label>Code</label>
+                            <p>{{companyDetails.companyCode}}</p>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Ceo</label>
+                            <p>{{companyDetails.ceo}}</p>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Turnover</label>
+                            <p>{{companyDetails.turnover}}</p>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Website</label>
+                            <p>{{companyDetails.website}}</p>
+                        </div>
+                        <div class="col-sm-4 form-group">
+                            <label>Stock Exchange</label>
+                            <p>{{companyDetails.bse === true ? 'BSE' : 'NSE'}}</p>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <h3 class="mt-4"><b>Stock Details</b></h3>
+                    <table mat-table [dataSource]="stockList" class="mat-elevation-z8">
+                        <ng-container matColumnDef="price">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="lastUpdate">
+                            <th mat-header-cell *matHeaderCellDef> Created At</th>
+                            <td mat-cell *matCellDef="let element"> {{element.createdAt | date: 'yyyy-MM-dd hh:mm'}}
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayStockColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayStockColumns;"></tr>
+                    </table>
+                    <mat-paginator #paginator2="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                        aria-label="Select page of periodic elements">
+                    </mat-paginator>
+
+                </mat-dialog-content>
+                <mat-divider></mat-divider>
+                <mat-dialog-actions align="end">
+                    <button mat-button mat-dialog-close>Close</button>
+                </mat-dialog-actions>
+            </ng-template>
+
+            <ng-template #deleteCompanyModal>
+                <h2 mat-dialog-title>Delete {{companyCodeHidden}}</h2>
+                <mat-divider></mat-divider>
+                <mat-dialog-content class="mat-typography mt-4">
+                    <input type="hidden" [(ngModel)]="companyCodeHidden">
+                    <h1>Once the company is deleted, all its stock details will also be delete.</h1>
+                    <h3>Are you sure to delete the company?</h3>
+                </mat-dialog-content>
+                <mat-dialog-actions align="end">
+                    <button mat-button color="warn" mat-dialog-close (click)="removeCompany()">Delete</button>
+                    <button mat-button mat-dialog-close>Close</button>
+                </mat-dialog-actions>
+            </ng-template>
+        </div>
+    </div>
+</div>
